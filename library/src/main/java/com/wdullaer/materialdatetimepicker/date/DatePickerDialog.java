@@ -186,6 +186,10 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
     public DatePickerDialog() {
         // Empty constructor required for dialog fragment.
     }
+        
+    public DatePickerDialog(Boolean hideMonth) {
+        
+    }
 
     /**
      * Create a new DatePickerDialog instance with a specific initial selection.
