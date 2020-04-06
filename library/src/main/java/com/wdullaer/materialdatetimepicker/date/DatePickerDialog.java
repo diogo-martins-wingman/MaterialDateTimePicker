@@ -159,6 +159,8 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
     private String mSelectDay;
     private String mYearPickerDescription;
     private String mSelectYear;
+        
+    private boolean mHideMonth = false;
 
     /**
      * The callback used to indicate the user is done filling in the date.
@@ -188,7 +190,7 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
     }
         
     public DatePickerDialog(Boolean hideMonth) {
-        
+        mHideMonth = hideMonth
     }
 
     /**
@@ -511,6 +513,8 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
 
         switch (viewIndex) {
             case MONTH_AND_DAY_VIEW:
+                if(mHideMonth)
+                    return;
                 if (mVersion == Version.VERSION_1) {
                     ObjectAnimator pulseAnimator = Utils.getPulseAnimator(mMonthAndDayView, 0.9f,
                             1.05f);
