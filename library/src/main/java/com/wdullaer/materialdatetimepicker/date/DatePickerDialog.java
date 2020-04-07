@@ -36,12 +36,14 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
+
 import com.wdullaer.materialdatetimepicker.HapticFeedbackController;
 import com.wdullaer.materialdatetimepicker.R;
 import com.wdullaer.materialdatetimepicker.Utils;
@@ -159,7 +161,7 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
     private String mSelectDay;
     private String mYearPickerDescription;
     private String mSelectYear;
-        
+
     private boolean mHideMonth = false;
 
     /**
@@ -188,20 +190,22 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
     public DatePickerDialog() {
         // Empty constructor required for dialog fragment.
     }
-        
+
     public DatePickerDialog(Boolean hideMonth) {
         mHideMonth = hideMonth;
     }
 
     /**
      * Create a new DatePickerDialog instance with a specific initial selection.
+     *
      * @param callBack    How the parent is notified that the date is set.
      * @param year        The initial year of the dialog.
      * @param monthOfYear The initial month of the dialog.
      * @param dayOfMonth  The initial day of the dialog.
      * @return a new DatePickerDialog instance.
      */
-    public static DatePickerDialog newInstance(OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth) {
+    public static DatePickerDialog newInstance(OnDateSetListener callBack, int year,
+            int monthOfYear, int dayOfMonth) {
         DatePickerDialog ret = new DatePickerDialog();
         ret.initialize(callBack, year, monthOfYear, dayOfMonth);
         return ret;
@@ -209,6 +213,7 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
 
     /**
      * Create a new DatePickerDialog instance initialised to the current system date.
+     *
      * @param callback How the parent is notified that the date is set.
      * @return a new DatePickerDialog instance
      */
@@ -220,6 +225,7 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
 
     /**
      * Create a new DatePickerDialog instance with a specific initial selection.
+     *
      * @param callback         How the parent is notified that the date is set.
      * @param initialSelection A Calendar object containing the original selection of the picker.
      *                         (Time is ignored by trimming the Calendar to midnight in the current
@@ -227,7 +233,8 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
      * @return a new DatePickerDialog instance
      */
     @SuppressWarnings({"unused", "WeakerAccess"})
-    public static DatePickerDialog newInstance(OnDateSetListener callback, Calendar initialSelection) {
+    public static DatePickerDialog newInstance(OnDateSetListener callback,
+            Calendar initialSelection) {
         DatePickerDialog ret = new DatePickerDialog();
         ret.initialize(callback, initialSelection);
         return ret;
@@ -240,7 +247,8 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
         //noinspection deprecation
         setTimeZone(mCalendar.getTimeZone());
 
-        mVersion = Build.VERSION.SDK_INT < Build.VERSION_CODES.M ? Version.VERSION_1 : Version.VERSION_2;
+        mVersion = Build.VERSION.SDK_INT < Build.VERSION_CODES.M ? Version.VERSION_1
+                : Version.VERSION_2;
     }
 
     public void initialize(OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth) {
@@ -266,9 +274,11 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
             mDefaultView = savedInstanceState.getInt(KEY_DEFAULT_VIEW);
         }
         if (Build.VERSION.SDK_INT < 18) {
-            VERSION_2_FORMAT = new SimpleDateFormat(activity.getResources().getString(R.string.mdtp_date_v2_daymonthyear), mLocale);
+            VERSION_2_FORMAT = new SimpleDateFormat(
+                    activity.getResources().getString(R.string.mdtp_date_v2_daymonthyear), mLocale);
         } else {
-            VERSION_2_FORMAT = new SimpleDateFormat(DateFormat.getBestDateTimePattern(mLocale, "EEEMMMdd"), mLocale);
+            VERSION_2_FORMAT = new SimpleDateFormat(
+                    DateFormat.getBestDateTimePattern(mLocale, "EEEMMMdd"), mLocale);
         }
         VERSION_2_FORMAT.setTimeZone(getTimeZone());
     }
@@ -313,7 +323,7 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         int listPosition = -1;
         int listPositionOffset = 0;
         int currentView = mDefaultView;
@@ -328,22 +338,31 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
             listPosition = savedInstanceState.getInt(KEY_LIST_POSITION);
             listPositionOffset = savedInstanceState.getInt(KEY_LIST_POSITION_OFFSET);
             //noinspection unchecked
-            highlightedDays = (HashSet<Calendar>) savedInstanceState.getSerializable(KEY_HIGHLIGHTED_DAYS);
+            highlightedDays = (HashSet<Calendar>) savedInstanceState.getSerializable(
+                    KEY_HIGHLIGHTED_DAYS);
             mThemeDark = savedInstanceState.getBoolean(KEY_THEME_DARK);
             mThemeDarkChanged = savedInstanceState.getBoolean(KEY_THEME_DARK_CHANGED);
-            if (savedInstanceState.containsKey(KEY_ACCENT)) mAccentColor = savedInstanceState.getInt(KEY_ACCENT);
+            if (savedInstanceState.containsKey(KEY_ACCENT)) {
+                mAccentColor = savedInstanceState.getInt(KEY_ACCENT);
+            }
             mVibrate = savedInstanceState.getBoolean(KEY_VIBRATE);
             mDismissOnPause = savedInstanceState.getBoolean(KEY_DISMISS);
             mAutoDismiss = savedInstanceState.getBoolean(KEY_AUTO_DISMISS);
             mTitle = savedInstanceState.getString(KEY_TITLE);
             mOkResid = savedInstanceState.getInt(KEY_OK_RESID);
             mOkString = savedInstanceState.getString(KEY_OK_STRING);
-            if (savedInstanceState.containsKey(KEY_OK_COLOR)) mOkColor = savedInstanceState.getInt(KEY_OK_COLOR);
+            if (savedInstanceState.containsKey(KEY_OK_COLOR)) {
+                mOkColor = savedInstanceState.getInt(
+                        KEY_OK_COLOR);
+            }
             mCancelResid = savedInstanceState.getInt(KEY_CANCEL_RESID);
             mCancelString = savedInstanceState.getString(KEY_CANCEL_STRING);
-            if (savedInstanceState.containsKey(KEY_CANCEL_COLOR)) mCancelColor = savedInstanceState.getInt(KEY_CANCEL_COLOR);
+            if (savedInstanceState.containsKey(KEY_CANCEL_COLOR)) {
+                mCancelColor = savedInstanceState.getInt(KEY_CANCEL_COLOR);
+            }
             mVersion = (Version) savedInstanceState.getSerializable(KEY_VERSION);
-            mScrollOrientation = (ScrollOrientation) savedInstanceState.getSerializable(KEY_SCROLL_ORIENTATION);
+            mScrollOrientation = (ScrollOrientation) savedInstanceState.getSerializable(
+                    KEY_SCROLL_ORIENTATION);
             mTimezone = (TimeZone) savedInstanceState.getSerializable(KEY_TIMEZONE);
             mDateRangeLimiter = savedInstanceState.getParcelable(KEY_DATERANGELIMITER);
 
@@ -370,7 +389,8 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
 
         mDefaultLimiter.setController(this);
 
-        int viewRes = mVersion == Version.VERSION_1 ? R.layout.mdtp_date_picker_dialog : R.layout.mdtp_date_picker_dialog_v2;
+        int viewRes = mVersion == Version.VERSION_1 ? R.layout.mdtp_date_picker_dialog
+                : R.layout.mdtp_date_picker_dialog_v2;
         View view = inflater.inflate(viewRes, container, false);
         // All options have been set at this point: round the initial selection if necessary
         mCalendar = mDateRangeLimiter.setToNearestDate(mCalendar);
@@ -398,7 +418,8 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
         mYearPickerDescription = res.getString(R.string.mdtp_year_picker_description);
         mSelectYear = res.getString(R.string.mdtp_select_year);
 
-        int bgColorResource = mThemeDark ? R.color.mdtp_date_picker_view_animator_dark_theme : R.color.mdtp_date_picker_view_animator;
+        int bgColorResource = mThemeDark ? R.color.mdtp_date_picker_view_animator_dark_theme
+                : R.color.mdtp_date_picker_view_animator;
         int bgColor = ContextCompat.getColor(activity, bgColorResource);
         view.setBackgroundColor(bgColor);
 
@@ -422,8 +443,11 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
             dismiss();
         });
         okButton.setTypeface(ResourcesCompat.getFont(activity, R.font.robotomedium));
-        if (mOkString != null) okButton.setText(mOkString);
-        else okButton.setText(mOkResid);
+        if (mOkString != null) {
+            okButton.setText(mOkString);
+        } else {
+            okButton.setText(mOkResid);
+        }
 
         Button cancelButton = view.findViewById(R.id.mdtp_cancel);
         cancelButton.setOnClickListener(v -> {
@@ -431,16 +455,23 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
             if (getDialog() != null) getDialog().cancel();
         });
         cancelButton.setTypeface(ResourcesCompat.getFont(activity, R.font.robotomedium));
-        if (mCancelString != null) cancelButton.setText(mCancelString);
-        else cancelButton.setText(mCancelResid);
+        if (mCancelString != null) {
+            cancelButton.setText(mCancelString);
+        } else {
+            cancelButton.setText(mCancelResid);
+        }
         cancelButton.setVisibility(isCancelable() ? View.VISIBLE : View.GONE);
 
         // If an accent color has not been set manually, get it from the context
         if (mAccentColor == null) {
             mAccentColor = Utils.getAccentColorFromThemeIfAvailable(getActivity());
         }
-        if (mDatePickerHeaderView != null) mDatePickerHeaderView.setBackgroundColor(Utils.darkenColor(mAccentColor));
-        view.findViewById(R.id.mdtp_day_picker_selected_date_layout).setBackgroundColor(mAccentColor);
+        if (mDatePickerHeaderView != null) {
+            mDatePickerHeaderView.setBackgroundColor(
+                    Utils.darkenColor(mAccentColor));
+        }
+        view.findViewById(R.id.mdtp_day_picker_selected_date_layout).setBackgroundColor(
+                mAccentColor);
 
         // Buttons can have a different color
         if (mOkColor == null) {
@@ -513,8 +544,6 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
 
         switch (viewIndex) {
             case MONTH_AND_DAY_VIEW:
-                if(mHideMonth)
-                    return;
                 if (mVersion == Version.VERSION_1) {
                     ObjectAnimator pulseAnimator = Utils.getPulseAnimator(mMonthAndDayView, 0.9f,
                             1.05f);
@@ -582,11 +611,12 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
 
         if (mVersion == Version.VERSION_1) {
             if (mDatePickerHeaderView != null) {
-                if (mTitle != null)
+                if (mTitle != null) {
                     mDatePickerHeaderView.setText(mTitle);
-                else {
-                    mDatePickerHeaderView.setText(mCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG,
-                            mLocale));
+                } else {
+                    mDatePickerHeaderView.setText(
+                            mCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG,
+                                    mLocale));
                 }
             }
             mSelectedMonthTextView.setText(MONTH_FORMAT.format(mCalendar.getTime()));
@@ -595,10 +625,11 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
 
         if (mVersion == Version.VERSION_2) {
             mSelectedDayTextView.setText(VERSION_2_FORMAT.format(mCalendar.getTime()));
-            if (mTitle != null)
+            if (mTitle != null) {
                 mDatePickerHeaderView.setText(mTitle.toUpperCase(mLocale));
-            else
+            } else {
                 mDatePickerHeaderView.setVisibility(View.GONE);
+            }
         }
 
         // Accessibility.
@@ -625,7 +656,8 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
     }
 
     /**
-     * Set whether the picker should dismiss itself when being paused or whether it should try to survive an orientation change
+     * Set whether the picker should dismiss itself when being paused or whether it should try to
+     * survive an orientation change
      *
      * @param dismissOnPause true if the dialog should dismiss itself when it's pausing
      */
@@ -646,7 +678,8 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
     /**
      * Set whether the dark theme should be used
      *
-     * @param themeDark true if the dark theme should be used, false if the default theme should be used
+     * @param themeDark true if the dark theme should be used, false if the default theme should be
+     *                  used
      */
     public void setThemeDark(boolean themeDark) {
         mThemeDark = themeDark;
@@ -822,7 +855,8 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
     }
 
     /**
-     * @return The list of dates, as Calendar Objects, which should be highlighted. null is no dates should be highlighted
+     * @return The list of dates, as Calendar Objects, which should be highlighted. null is no dates
+     * should be highlighted
      */
     @SuppressWarnings("unused")
     public Calendar[] getHighlightedDays() {
@@ -855,7 +889,8 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
     }
 
     /**
-     * @return an Array of Calendar objects containing the list with selectable items. null if no restriction is set
+     * @return an Array of Calendar objects containing the list with selectable items. null if no
+     * restriction is set
      */
     @SuppressWarnings("unused")
     public Calendar[] getSelectableDays() {
@@ -864,7 +899,8 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
 
     /**
      * Sets a list of days that are not selectable in the picker
-     * Setting this value will take precedence over using setMinDate() and setMaxDate(), but stacks with setSelectableDays()
+     * Setting this value will take precedence over using setMinDate() and setMaxDate(), but stacks
+     * with setSelectableDays()
      *
      * @param disabledDays an Array of Calendar Objects containing the disabled dates
      */
@@ -875,7 +911,8 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
     }
 
     /**
-     * @return an Array of Calendar objects containing the list of days that are not selectable. null if no restriction is set
+     * @return an Array of Calendar objects containing the list of days that are not selectable.
+     * null if no restriction is set
      */
     @SuppressWarnings("unused")
     public Calendar[] getDisabledDays() {
@@ -883,7 +920,9 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
     }
 
     /**
-     * Provide a DateRangeLimiter for full control over which dates are enabled and disabled in the picker
+     * Provide a DateRangeLimiter for full control over which dates are enabled and disabled in the
+     * picker
+     *
      * @param dateRangeLimiter An implementation of the DateRangeLimiter interface
      */
     @SuppressWarnings("unused")
@@ -962,6 +1001,7 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
 
     /**
      * Set which way the user needs to swipe to switch months in the MonthView
+     *
      * @param orientation The orientation to use
      */
     public void setScrollOrientation(ScrollOrientation orientation) {
@@ -970,6 +1010,7 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
 
     /**
      * Get which way the user needs to swipe to switch months in the MonthView
+     *
      * @return SwipeOrientation
      */
     public ScrollOrientation getScrollOrientation() {
@@ -981,6 +1022,7 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
      *
      * This has been deprecated in favor of setting the TimeZone using the constructor that
      * takes a Calendar object
+     *
      * @param timeZone The timezone to use
      */
     @SuppressWarnings("DeprecatedIsStillUsed")
@@ -995,6 +1037,7 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
 
     /**
      * Set a custom locale to be used when generating various strings in the picker
+     *
      * @param locale Locale
      */
     @SuppressWarnings("WeakerAccess")
@@ -1008,6 +1051,7 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
 
     /**
      * Return the current locale (default or other)
+     *
      * @return Locale
      */
     @Override
@@ -1032,6 +1076,7 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
 
     /**
      * Get a reference to the callback
+     *
      * @return OnDateSetListener the callback
      */
     @SuppressWarnings("unused")
@@ -1066,6 +1111,9 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
     public void onYearSelected(int year) {
         mCalendar.set(Calendar.YEAR, year);
         mCalendar = adjustDayInMonthIfNeeded(mCalendar);
+        if (mHideMonth) {
+            return;
+        }
         updatePickers();
         setCurrentView(MONTH_AND_DAY_VIEW);
         updateDisplay(true);
@@ -1140,7 +1188,8 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
         if (mVibrate) mHapticFeedbackController.tryVibrate();
     }
 
-    @Override public TimeZone getTimeZone() {
+    @Override
+    public TimeZone getTimeZone() {
         return mTimezone == null ? TimeZone.getDefault() : mTimezone;
     }
 
