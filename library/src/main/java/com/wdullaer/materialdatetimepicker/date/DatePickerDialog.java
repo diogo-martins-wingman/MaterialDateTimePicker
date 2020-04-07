@@ -190,7 +190,7 @@ public class DatePickerDialog extends AppCompatDialogFragment implements
     }
         
     public DatePickerDialog(Boolean hideMonth) {
-        mHideMonth = hideMonth
+        mHideMonth = hideMonth;
     }
 
     /**
